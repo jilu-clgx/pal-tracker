@@ -1,0 +1,10 @@
+---
+applications:
+- name: pal-tracker
+  path: src/PalTracker/bin/Release/netcoreapp2.1/publish/
+  instances: 1
+  memory: 512M
+  routes:
+  - route: msg-pal-tracker-jl-review.apps.pikes.pal.pivotal.io
+  env:
+    WELCOME_MESSAGE: Hello from the review environment
