@@ -2,17 +2,19 @@
 using System.Linq;
 using PalTracker;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace PalTrackerTests
 {
     public class InMemoryTimeEntryRepositoryTest
     {
-        private readonly InMemoryTimeEntryRepository _repository;
-
-        public InMemoryTimeEntryRepositoryTest()
+        private ITestOutputHelper _output;
+        public InMemoryTimeEntryRepositoryTest(ITestOutputHelper output)
         {
+            _output = output;
             _repository = new InMemoryTimeEntryRepository();
         }
+        private readonly InMemoryTimeEntryRepository _repository;
 
         [Fact]
         public void Create()
@@ -62,9 +64,12 @@ namespace PalTrackerTests
         [Fact]
         public void Update()
         {
-            _repository.Create(new TimeEntry(222, 333, new DateTime(2008, 08, 01, 12, 00, 01), 24));
+            var created = _repository.Create(new TimeEntry(222, 333, new DateTime(2008, 08, 01, 12, 00, 01), 24));
+_output.WriteLine("*****  " + created.Id);
 
-            _repository.Update(1, new TimeEntry(555, 666, new DateTime(2020, 08, 01, 01, 55, 10), 8));
+            var updated = _repository.Update(1, new TimeEntry(555, 666, new DateTime(2020, 08, 01, 01, 55, 10), 8));
+
+_output.WriteLine("*****  " + updated.Id);
 
             var entires = _repository.List();
             Assert.Contains(new TimeEntry(1, 555, 666, new DateTime(2020, 08, 01, 01, 55, 10), 8), entires);
