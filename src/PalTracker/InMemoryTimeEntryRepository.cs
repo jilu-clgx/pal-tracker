@@ -47,6 +47,7 @@ namespace PalTracker
             {
                 timeEntry.Id = id;
                 _entries[id] = timeEntry;
+                return timeEntry;
             }
             return new TimeEntry(0,0,0,DateTime.MinValue, 0);
         }
