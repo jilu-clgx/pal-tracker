@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using PalTracker;
 using Xunit;
 
+
 namespace PalTrackerTests
 {
     [Collection("Integration")]
@@ -17,7 +18,10 @@ namespace PalTrackerTests
 
         public TimeEntryIntegrationTest()
         {
+            Environment.SetEnvironmentVariable("MYSQL__CLIENT__CONNECTIONSTRING", DbTestSupport.TestDbConnectionString);
             _testClient = IntegrationTestServer.Start().CreateClient();
+
+            DbTestSupport.ExecuteSql("TRUNCATE TABLE time_entries");
         }
 
         [Fact]
@@ -52,8 +56,9 @@ namespace PalTrackerTests
             Assert.Equal(24, responseBody["hours"].ToObject<int>());
         }
 
-        [Fact]
-        public void List()
+ 
+         [Fact]
+       private void List()
         {
             var id1 = CreateTimeEntry(new TimeEntry(222, 333,  new DateTime(2008, 01, 08), 24));
             var id2 = CreateTimeEntry(new TimeEntry(444, 555,  new DateTime(2008, 02, 10), 6));

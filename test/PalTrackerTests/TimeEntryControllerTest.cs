@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using PalTracker;
 using Xunit;
+[assembly:CollectionBehavior(DisableTestParallelization=true)]
 
 namespace PalTrackerTests
 {
